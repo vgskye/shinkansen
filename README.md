@@ -1,10 +1,12 @@
 # minivan
 
-Bare-minimum Gradle plugin for putting vanilla Minecraft, with official names, on the compilation classpath.
+Bare-minimum Gradle plugin for putting vanilla Minecraft, remapped with official names, on the compilation classpath.
 
-`minivan` is much smaller and much less feature-rich than [VanillaGradle](https://github.com/SpongePowered/VanillaGradle/) (hence the name). `minivan` makes *no* attempt to provide "run configs", reobfuscation, asset downloading, native library downloading, `genSources`/`decompile`, access widening, good error messages...
+# Audience
 
-`minivan` is just one of the lower-level supporting bricks in your Minecraft project. The intended audience is people writing [jaredlll08/MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template) -style mods, who need something to fill out the compilation classpath on their `Common`/`Xplat` subproject, but don't need much else.
+`minivan` is for people writing [jaredlll08/MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template) -style mods who need something to fill out the compilation classpath on their `Common`/`Xplat` subproject, but don't need much else. Traditionally, this is done with the excellent [VanillaGradle](https://github.com/SpongePowered/VanillaGradle/) project.
+
+However, VanillaGradle is a more general project, and `minivan` is designed specifically for the needs of Fabric and Forge modders. `minivan` does not download assets/natives, does not contain a `runClient`/`runServer` task, and does not contain a nice decompiler, under the expectation that your Fabric and Forge projects already have everything you need there.
 
 # Usage
 
@@ -30,7 +32,7 @@ apply plugin: "java"
 apply plugin: "agency.highlysuspect.minivan"
 
 minivan {
-	version("1.20.2")
+	version("1.20.1")
 }
 ```
 
@@ -59,13 +61,13 @@ plugins {
 }
 
 minivan {
-	version("1.20.2")
+	version("1.20.1")
 }
 ```
 
 </details>
 
-Either of these buildscripts will cause the Minecraft 1.20.2 client and server to be downloaded, remapped to official names, merged, and stuck onto the `compileOnly` configuration along with all its dependencies (LWJGL, etc). This'll happen in `afterEvaluate`. See `./demo` for a worked example.
+Either of these buildscripts will cause the Minecraft 1.20.1 client and server to be downloaded, remapped to official names, merged, and stuck onto the `compileOnly` configuration along with all its dependencies (LWJGL, etc). This'll happen in `afterEvaluate`. See `./demo` for a worked example.
 
 ## Nuts and bolts
 
@@ -73,7 +75,7 @@ Using `version` is optional. For a lower-level imperative experience, try the `m
 
 ```gradle
 //this object is a `agency.highlysuspect.minivan.prov.MinecraftProvider.Result`:
-def mc = minivan.getMinecraft("1.20.2")
+def mc = minivan.getMinecraft("1.20.1")
 
 //java.nio.Path to the "minecraft, remapped and merged" jar on your computer
 println("merged minecraft jar: ${mc.minecraft}")
@@ -87,13 +89,15 @@ project.dependencies.add("compileOnly", project.files(mc.minecraft))
 mc.dependencies.forEach { project.dependencies.add("compileOnly", it) }
 ```
 
-`getMinecraft` takes care of the downloading/remapping/merging, what you do with the data is up to you.
+`getMinecraft` takes care of the downloading/remapping/merging, what you do with the data is up to you. (Try grabbing a few jars and pumping them into [crossroad](https://github.com/CrackedPolishedBlackstoneBricksMC/crossroad)?)
 
 ## Other options
 
 Useful information is logged at the `--info` level.
 
-If you pass `--refresh-dependencies`, pass `-Dminivan.refreshDependencies=true`, or set `minivan { refreshDependencies = true }` in-script, all derived artifacts will be deleted and recomputed. Similar for `--offline`/`-Dminivan.offline`/`minivan { offline = true }`; it will now error-out instead of making network connections. The `minivan`-specific ones only affect `minivan` and not the other things in Gradle that are controlled by those switches.
+If you pass `--refresh-dependencies`, pass `-Dminivan.refreshDependencies=true`, or set `minivan { refreshDependencies = true }` in-script, all derived artifacts will be deleted and recomputed. If you pass `--offline`, pass `-Dminivan.offline`, or set `minivan { offline = true }` in-script, `minivan` will now error-out instead of making network connections.
+
+The `minivan`-specific ones only affect `minivan` and not the other things in Gradle that are controlled by those switches.
 
 ## Migrating from VanillaGradle
 
@@ -111,7 +115,7 @@ Important note for IntelliJ users:
 
 # things that this plugin glues together
 
-The neat thing about writing Gradle tooling for Minecraft in 2023 is that everyone has already wrote everything by now. It's just a matter of assembling other people's libraries in the right way with the right glue code. This plugin is like 5% original work by-weight. Most of the heavy lifting is done by:
+The neat thing about writing Gradle tooling for Minecraft in ~~2023~~ 2024 is that everyone has already wrote everything by now. It's just a matter of assembling other people's libraries in the right way with the right glue code. This plugin is like 5% original work by-weight. Most of the heavy lifting is done by:
 
 * [CadixDev/Lorenz](https://github.com/CadixDev/Lorenz) and `lorenz-io-proguard` parse Mojang's official mappings.
 * [FabricMC/tiny-remapper](https://github.com/FabricMC/tiny-remapper) is the jar remapper of choice.
@@ -125,6 +129,7 @@ The general approach (`prov` package) has been copied from how I ended up struct
 * Parchment stuff:
   * param-name mappings
   * javadoc (which requires implementing `genSources`, doing linemapping, etc. voldeloom has mosta that stuff)
+  * mh. Hard. Loom supports Parchment, if you really want Patchment you can open your Loom project's sources.
 * Hmm: optional mode that tries to use a cached jar from `fabric-loom`, to save RAM
 
 # License
