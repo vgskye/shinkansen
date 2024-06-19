@@ -13,7 +13,6 @@ repositories {
 		url = "https://maven.fabricmc.net/"
 		mavenContent {
 			includeGroup "net.fabricmc"
-			includeGroup "org.jetbrains" //fabricflower
 		}
 	}
 	mavenCentral()
@@ -36,9 +35,6 @@ dependencies {
 	implementation ("net.fabricmc:tiny-remapper:0.8.6") { transitive = false }
 	implementation "org.cadixdev:lorenz:0.5.7"
 	implementation "org.cadixdev:lorenz-io-proguard:0.5.7"
-	
-	//decompilers
-	implementation "org.jetbrains:intellij-fernflower:1.2.1.16"
 }
 
 gradlePlugin {

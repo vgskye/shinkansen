@@ -6,7 +6,9 @@ Bare-minimum Gradle plugin for putting vanilla Minecraft, remapped with official
 
 `minivan` is for people writing [jaredlll08/MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template) -style mods who need something to fill out the compilation classpath on their `Common`/`Xplat` subproject, but don't need much else. Traditionally, this is done with the excellent [VanillaGradle](https://github.com/SpongePowered/VanillaGradle/) project.
 
-However, VanillaGradle is a more general project, and `minivan` is designed specifically for the needs of Fabric and Forge modders. `minivan` does not download assets/natives, does not contain a `runClient`/`runServer` task, and does not contain a nice decompiler, under the expectation that your Fabric and Forge projects already have everything you need there.
+However, VanillaGradle is a more general project, and `minivan` is designed specifically for the needs of Fabric and Forge modders. `minivan` does not download assets/natives, does not contain a `runClient`/`runServer` task, and does not contain a nice decompiler, under the expectation that your Fabric and Forge projects already have everything you need. This allows minivan to be simple and fast, and leaves your workspace free from extraneous copies of e.g. Minecraft assets.
+
+`minivan` also does not perform reobfuscation; any code built against `minivan`ned-minecraft dependencies will be compiled and published with names as they appear in your IDE.
 
 # Usage
 
