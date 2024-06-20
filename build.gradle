@@ -4,6 +4,20 @@ plugins {
     id "maven-publish"
 }
 
+// CI nonsense //
+
+String buildContext = "Local"
+if(System.getenv("GITHUB_SHA") != null) {
+    String hash = System.getenv("GITHUB_SHA")
+    if(hash.length() > 8) hash = hash.substring(0, 8)
+
+    buildContext = "Github Actions CI, commit " + hash
+}
+
+if(System.getenv("VOLDE_RELEASE_MODE") == null) {
+    version += "-SNAPSHOT"
+}
+
 //for now, stick to Java 8
 sourceCompatibility = targetCompatibility = "1.8"
 
@@ -38,6 +52,14 @@ dependencies {
 
     //access wideners
     implementation "net.fabricmc:access-widener:2.1.0"
+}
+
+jar {
+    manifest {
+        //Reading from project.version is deprecated in Gradle 7 lol
+        String ver = project.respondsTo("archivesVersion") ? project.archivesVersion : project.version
+        attributes "Implementation-Version": "${ver} (build ctx: ${buildContext})"
+    }
 }
 
 gradlePlugin {

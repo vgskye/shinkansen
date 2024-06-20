@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 public class MinivanPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
-		project.getLogger().info("vroom vroom! applying minivan 0.4");
+		project.getLogger().lifecycle("Applying minivan " + getClass().getPackage().getImplementationVersion());
+		project.getLogger().info("vroom vroom!!");
 		
 		project.getExtensions().create("minivan", MinivanExt.class, project)
 			.setupAfterEvaluate();
