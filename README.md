@@ -127,15 +127,16 @@ The `minivan`-specific ones only affect `minivan` and not the other things in Gr
 
 * Swap the plugin invocation to `agency.highlysuspect.minivan`.
 * Change `minecraft {` to `minivan {`.
+* You might need to add a `compileOnly` dependency on `"org.jetbrains:annotations:24.0.1"`.
 
-There are two supported functions inside the `minivan` block, `version` and `accessWideners`. No Gradle tasks are added.
+There are only two supported VanillaGradle functions inside the `minivan` block, `version` and `accessWideners`. No Gradle tasks are added by the plugin.
 
 Important note for IntelliJ users:
 
-* Right click on any project or task in the Gradle Tool Window and select "Tasks Activation". There is surely an easier way to get to this dialog but I can't find it.
+* Right click on any project or task in the Gradle Tool Window and select "Tasks Activation".
 * Remove all task activations that refer to running a `:prepareWorkspace` task after syncing.
-  * This will probably be "all of them".
-  * `minivan` does not add this task, so IntelliJ sync will fail until this activation is removed.
+  * This will probably be "all of the task activations".
+  * `minivan` does not add the `prepareWorkspace` task, so IntelliJ sync will fail until this activation is removed.
 
 # things that this plugin glues together
 
