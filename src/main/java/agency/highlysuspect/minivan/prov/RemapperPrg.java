@@ -4,6 +4,7 @@ import net.fabricmc.tinyremapper.IMappingProvider;
 import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 import org.cadixdev.lorenz.MappingSet;
+import org.cadixdev.lorenz.io.MappingsReader;
 import org.cadixdev.lorenz.io.proguard.ProGuardFormat;
 import org.cadixdev.lorenz.model.ClassMapping;
 import org.cadixdev.lorenz.model.FieldMapping;
@@ -29,9 +30,17 @@ public class RemapperPrg extends MiniProvider {
 			log.lifecycle("Remapping {} to {} using {}", inJar, outJar, mapFile);
 			
 			//lorenz
-			MappingSet prg = new ProGuardFormat().createReader(mapFile).read().reverse();
+			MappingSet prg;
+			try(MappingsReader reader = new ProGuardFormat().createReader(mapFile)) {
+				log.lifecycle("\\-> Parsing mappings...");
+				prg = reader.read();
+				
+				log.lifecycle("\\-> Flipping mappings...");
+				prg = prg.reverse();
+			}
 			
 			//tiny-remapper
+			log.lifecycle("\\-> Building tiny-remapper...");
 			TinyRemapper remapper = TinyRemapper.newRemapper()
 				.renameInvalidLocals(true)
 				.rebuildSourceFilenames(true)
@@ -39,8 +48,13 @@ public class RemapperPrg extends MiniProvider {
 				.build();
 			
 			try(OutputConsumerPath oc = new OutputConsumerPath.Builder(outJar).assumeArchive(true).build()) {
+				log.lifecycle("\\-> Copying non-class files...");
 				oc.addNonClassFiles(inJar);
+				
+				log.lifecycle("\\-> Reading jar...");
 				remapper.readInputs(inJar);
+				
+				log.lifecycle("\\-> Remapping...");
 				remapper.apply(oc);
 			} finally {
 				remapper.finish();

@@ -14,7 +14,10 @@ apply plugin: "agency.highlysuspect.minivan"
 
 //Put Minecraft onto the `compileOnly` configuration, the easy way:
 minivan {
-	version("1.20.2")
+	version("1.20.1")
+
+	//for local testing of minivan; makes it not cache anything
+	refreshDependencies = true
 }
 
 //Or do it the hard way:
