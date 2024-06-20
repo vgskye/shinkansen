@@ -54,7 +54,7 @@ public class RemapperPrg extends MiniProvider {
 				log.lifecycle("\\-> Reading jar...");
 				remapper.readInputs(inJar);
 				
-				log.lifecycle("\\-> Remapping...");
+				//log.lifecycle("\\-> Remapping...");
 				remapper.apply(oc);
 			} finally {
 				remapper.finish();
@@ -66,7 +66,11 @@ public class RemapperPrg extends MiniProvider {
 	
 	//glue code between lorenz and tiny-remapper
 	private IMappingProvider toIMappingProvider(MappingSet lorenzSet) {
-		return acceptor -> lorenzSet.getTopLevelClassMappings().forEach(tlcm -> visitClass(acceptor, tlcm));
+		return acceptor -> {
+			log.info("\\-> Loading mappings into tiny-remapper...");
+			lorenzSet.getTopLevelClassMappings().forEach(tlcm -> visitClass(acceptor, tlcm));
+			log.info("\\-> Done loading mappings, remapping...");
+		};
 	}
 	
 	private void visitClass(IMappingProvider.MappingAcceptor acceptor, ClassMapping<?, ?> classMapping) {
