@@ -21,14 +21,24 @@ public class MiniProvider {
 	protected final Props props = new Props();
 	
 	public void dependsOn(Object other) {
-		if(other instanceof Props) props.setAll((Props) other);
-		else if(other instanceof MiniProvider) props.setAll(((MiniProvider) other).props);
+		if(other instanceof Props) props.merge((Props) other);
+		else if(other instanceof MiniProvider) props.merge(((MiniProvider) other).props);
 		else throw new IllegalArgumentException(other.getClass().getName());
 	}
 	
 	@SuppressWarnings("DynamicRegexReplaceableByCompiledPattern")
 	protected String subst(String in) {
-		return in.replace("{HASH}", props.suffix());
+		String result = in.replace("{HASH}", props.suffix());
+		
+		if(ext.explainHashes) {
+			try {
+				props.explain(cacheDir());
+			} catch (Exception e) {
+				log.warn("couldn't explain hash " + props.suffix() + ": " + e.getMessage(), e);
+			}
+		}
+		
+		return result;
 	}
 	
 	protected Path cacheDir() throws IOException {

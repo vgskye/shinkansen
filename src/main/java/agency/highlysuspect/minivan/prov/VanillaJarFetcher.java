@@ -15,6 +15,8 @@ public class VanillaJarFetcher extends MiniProvider {
 		super(project);
 		this.version = version;
 		this.filenamePrefix = "minecraft-" + MinivanPlugin.filenameSafe(version);
+		
+		props.set("version", version);
 	}
 	
 	private final String version;
@@ -25,21 +27,21 @@ public class VanillaJarFetcher extends MiniProvider {
 		VersionManifest vm = getVersionManifestFor(version);
 		
 		//Try to fetch mappings first, just to crash early if there are no official mappings available
-		Path clientMap = getOrCreate(filenamePrefix + "-client-mappings.txt", to -> {
+		Path clientMap = getOrCreate(subst(filenamePrefix + "-client-mappings{HASH}.txt"), to -> {
 			log.lifecycle("Downloading client mappings to {}", to);
 			new DownloadSession(project).url(vm.getUrl("client_mappings")).dest(to).etag(true).gzip(true).download();
 		});
-		Path serverMap = getOrCreate(filenamePrefix + "-server-mappings.txt", to -> {
+		Path serverMap = getOrCreate(subst(filenamePrefix + "-server-mappings{HASH}.txt"), to -> {
 			log.lifecycle("Downloading server mappings to {}", to);
 			new DownloadSession(project).url(vm.getUrl("server_mappings")).dest(to).etag(true).gzip(true).download();
 		});
 		
 		//Don't gzip minecraft jars in-flight, i've had bizarre issues with it in the past. Sorry
-		Path clientJar = getOrCreate(filenamePrefix + "-client.jar", to -> {
+		Path clientJar = getOrCreate(subst(filenamePrefix + "-client{HASH}.jar"), to -> {
 			log.lifecycle("Downloading client jar to {}", to);
 			new DownloadSession(project).url(vm.getUrl("client")).dest(to).etag(true).gzip(false).download();
 		});
-		Path serverJar = getOrCreate(filenamePrefix + "-server.jar", to -> {
+		Path serverJar = getOrCreate(subst(filenamePrefix + "-server{HASH}.jar"), to -> {
 			log.lifecycle("Downloading server jar to {}", to);
 			new DownloadSession(project).url(vm.getUrl("server")).dest(to).etag(true).gzip(false).download();
 		});
@@ -55,7 +57,7 @@ public class VanillaJarFetcher extends MiniProvider {
 	// i don't need to worry about a local piston-meta cache.
 
 	private VersionManifest getVersionManifestFor(String version) throws Exception {
-		Path versionManifestJson = getOrCreate(filenamePrefix + "-info.json", to -> {
+		Path versionManifestJson = getOrCreate(subst(filenamePrefix + "-info{HASH}.json"), to -> {
 			//We don't know anything about this version yet. First, check our copy of piston-meta
 			ManifestIndex pistonMetaCache = fetchPistonMeta();
 			ManifestIndex.VersionData selectedVersion = pistonMetaCache.versions.get(version);

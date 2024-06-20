@@ -46,6 +46,8 @@ public class Merger extends MiniProvider {
 				blah(bonus1, mergedFs.getPath("/agency/highlysuspect/minivan/side/Side.class"));
 				blah(bonus2, mergedFs.getPath("/agency/highlysuspect/minivan/side/SideOnly.class"));
 			}
+			
+			log.lifecycle("\\-> Done merging.");
 		});
 		log.info("merged: {}", p);
 		return p;

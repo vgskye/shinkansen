@@ -11,14 +11,17 @@ import org.cadixdev.lorenz.model.FieldMapping;
 import org.cadixdev.lorenz.model.MethodMapping;
 import org.gradle.api.Project;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class RemapperPrg extends MiniProvider {
-	public RemapperPrg(Project project, Path inJar, Path mapFile, String outJarName) {
+	public RemapperPrg(Project project, Path inJar, Path mapFile, String outJarName) throws IOException {
 		super(project);
 		this.inJar = inJar;
 		this.mapFile = mapFile;
 		this.outJarName = outJarName;
+		
+		props.setFile("mappings", mapFile);
 	}
 	
 	public final Path inJar;

@@ -35,6 +35,9 @@ dependencies {
     implementation "net.fabricmc:tiny-remapper:0.10.3" //pulls in asm 9.6
     implementation "org.cadixdev:lorenz:0.5.7"
     implementation "org.cadixdev:lorenz-io-proguard:0.5.7"
+
+    //access wideners
+    implementation "net.fabricmc:access-widener:2.1.0"
 }
 
 gradlePlugin {
