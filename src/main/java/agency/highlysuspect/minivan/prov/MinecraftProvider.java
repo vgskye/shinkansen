@@ -44,14 +44,18 @@ public class MinecraftProvider extends MiniProvider {
 			
 			log.info("found vanilla dependency: {}", lib.getArtifactName());
 		}
-		
-		//Remap client and server using official names
 		String minecraftPrefix = "minecraft-" + MinivanPlugin.filenameSafe(version);
 		
+		//Unbundle server
+		Unbundler serverUnbundler = new Unbundler(project, vanillaJars.server, minecraftPrefix + "-server-unbundled{HASH}.jar");
+		serverUnbundler.dependsOn(vanillaJarFetcher);
+		Path unbundledServer = serverUnbundler.unbundle();
+		
+		//Remap client and server using official names
 		RemapperPrg clientMapper = new RemapperPrg(project, vanillaJars.client, vanillaJars.clientMappings, minecraftPrefix + "-client-mapped{HASH}.jar");
-		RemapperPrg serverMapper = new RemapperPrg(project, vanillaJars.server, vanillaJars.serverMappings, minecraftPrefix + "-server-mapped{HASH}.jar");
+		RemapperPrg serverMapper = new RemapperPrg(project, unbundledServer, vanillaJars.serverMappings, minecraftPrefix + "-server-mapped{HASH}.jar");
 		clientMapper.dependsOn(vanillaJarFetcher);
-		serverMapper.dependsOn(vanillaJarFetcher);
+		serverMapper.dependsOn(serverUnbundler);
 		
 		Path clientMapped = clientMapper.remap();
 		Path serverMapped = serverMapper.remap();

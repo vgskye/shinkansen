@@ -18,7 +18,8 @@ minivan {
 
 	//for local testing of minivan; makes it not cache anything
 	//refreshDependencies = true
-	explainHashes = true
+
+	//explainHashes = true
 
 	accessWideners "./botania_xplat.accesswidener"
 }

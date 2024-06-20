@@ -61,7 +61,11 @@ public class MiniProvider {
 	}
 	
 	protected Path getOrCreate(String p, ThrowyConsumer<Path> creator) throws Exception {
-		return getOrCreate(cacheDir().resolve(p), creator);
+		return getOrCreate(resolve(p), creator);
+	}
+	
+	protected Path resolve(String p) throws IOException {
+		return cacheDir().resolve(p);
 	}
 	
 	protected interface ThrowyConsumer<T> {
