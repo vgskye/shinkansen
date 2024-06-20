@@ -73,7 +73,7 @@ minivan {
 
 Either of these buildscripts will cause the Minecraft 1.20.1 client and server to be downloaded, remapped to official names, merged, and stuck onto the `compileOnly` configuration along with all its dependencies (LWJGL, etc). This'll happen in `afterEvaluate`. See `./demo` for a worked example.
 
-To apply Fabric-style access wideners, do this:
+To apply Fabric-style access wideners, do this: (available since `0.5`)
 
 ```gradle
 minivan {

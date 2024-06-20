@@ -43,7 +43,7 @@ public class MiniProvider {
 	
 	protected Path cacheDir() throws IOException {
 		Path cacheDir = props.has("projectmapped") ?
-			project.getProjectDir().toPath().resolve(".gradle").resolve("minivan-cache") : //project-local	
+			project.getRootProject().getProjectDir().toPath().resolve(".gradle").resolve("minivan-cache") : //project-local
 			project.getGradle().getGradleUserHomeDir().toPath().resolve("caches").resolve("minivan-cache"); //user-local
 		Files.createDirectories(cacheDir);
 		return cacheDir;
