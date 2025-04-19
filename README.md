@@ -89,7 +89,7 @@ Note that this will also "projectmap" your Minecraft jar, i.e. it'll get dropped
 Using the `minivan { }` block is optional. For a lower-level imperative experience, try the `minivan.minecraftBuilder` function (available since `0.5`) instead:
 
 ```gradle
-//this object is a `agency.highlysuspect.minivan.prov.MinecraftProvider.Result`:
+//this object is a `prov.vg.skye.shinkansen.MinecraftProvider.Result`:
 def mc = minivan.minecraftBuilder()
   .version("1.20.1")
   .build()

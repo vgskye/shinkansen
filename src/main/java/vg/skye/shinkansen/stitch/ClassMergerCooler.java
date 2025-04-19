@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package agency.highlysuspect.minivan.stitch;
+package vg.skye.shinkansen.stitch;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;

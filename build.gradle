@@ -49,6 +49,7 @@ dependencies {
     implementation "net.fabricmc:tiny-remapper:0.10.3" //pulls in asm 9.6
     implementation "org.cadixdev:lorenz:0.5.7"
     implementation "org.cadixdev:lorenz-io-proguard:0.5.7"
+    implementation "net.fabricmc:lorenz-tiny:4.0.2"
 
     //access wideners
     implementation "net.fabricmc:access-widener:2.1.0"
@@ -66,7 +67,7 @@ gradlePlugin {
     plugins {
         "${name}" {
             id = "${group}.${name}"
-            implementationClass = "agency.highlysuspect.minivan.MinivanPlugin"
+            implementationClass = "vg.skye.shinkansen.ShinkansenPlugin"
         }
     }
 }
@@ -82,17 +83,15 @@ publishing {
         }
     }
     repositories {
-        if (project.hasProperty("publish-username")) {
-            maven {
-                url "https://repo-api.sleeping.town/"
-                credentials {
-                    username project.hasProperty("publish-username") ? project.getProperty("publish-username") : null
-                    password project.hasProperty("publish-password") ? project.getProperty("publish-password") : null
-                }
-            }
-        }
         maven {
-            url file("build/maven").toURI().toString()
+            url "https://sg.storage.bunnycdn.com/skyeven"
+            credentials(HttpHeaderCredentials) {
+                name = "AccessKey"
+                value = property("skyevenToken")
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
         }
     }
 }

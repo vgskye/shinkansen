@@ -1,7 +1,7 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
 
-import agency.highlysuspect.minivan.Util;
+import vg.skye.shinkansen.Util;
 import org.gradle.api.Project;
 
 import java.io.InputStream;

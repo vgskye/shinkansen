@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -70,7 +70,7 @@ public class VersionManifest {
 		}
 		
 		public Path getPath(Path basePath) {
-			return basePath.resolve(MinivanPlugin.filenameSafe(name) + ".jar");
+			return basePath.resolve(ShinkansenPlugin.filenameSafe(name) + ".jar");
 		}
 		
 		public String getSha1() {

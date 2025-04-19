@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

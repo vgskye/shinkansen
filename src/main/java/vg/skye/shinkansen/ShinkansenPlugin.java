@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -11,13 +11,13 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
-public class MinivanPlugin implements Plugin<Project> {
+public class ShinkansenPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
-		project.getLogger().lifecycle("Applying minivan " + getClass().getPackage().getImplementationVersion());
-		project.getLogger().info("vroom vroom!!");
+		project.getLogger().lifecycle("Applying shinkansen " + getClass().getPackage().getImplementationVersion());
+		project.getLogger().info("choo choo!!");
 		
-		project.getExtensions().create("minivan", MinivanExt.class, project)
+		project.getExtensions().create("shinkansen", ShinkansenExt.class, project)
 			.setupAfterEvaluate();
 		
 		//Free bonus Mavens, vanilla 3rdparty libraries are found here.

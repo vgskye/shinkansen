@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;

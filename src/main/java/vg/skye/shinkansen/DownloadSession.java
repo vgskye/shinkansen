@@ -1,6 +1,5 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
-import agency.highlysuspect.minivan.MinivanExt;
 import org.gradle.api.Project;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +27,7 @@ import java.util.zip.GZIPInputStream;
 public class DownloadSession {
 	public DownloadSession(Project project) {
 		this.project = project;
-		this.extension = project.getExtensions().getByType(MinivanExt.class);
+		this.extension = project.getExtensions().getByType(ShinkansenExt.class);
 	}
 	
 	public DownloadSession(String url, Project project) {
@@ -37,7 +36,7 @@ public class DownloadSession {
 	}
 	
 	private final Project project;
-	private final MinivanExt extension;
+	private final ShinkansenExt extension;
 	
 	private URL url;
 	private Path dest;

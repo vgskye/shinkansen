@@ -1,6 +1,6 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
-import agency.highlysuspect.minivan.prov.MinecraftProvider;
+import vg.skye.shinkansen.prov.MinecraftProvider;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
@@ -8,20 +8,20 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import java.io.File;
 import java.util.stream.Collectors;
 
-public class MinivanExt {
-	public MinivanExt(Project project) {
+public class ShinkansenExt {
+	public ShinkansenExt(Project project) {
 		this.project = project;
 		
 		this.offline = project.getGradle().getStartParameter().isOffline() ||
-			project.hasProperty("minivan.offline") ||
-			System.getProperty("minivan.offline") != null;
+			project.hasProperty("shinkansen.offline") ||
+			System.getProperty("shinkansen.offline") != null;
 		
 		this.refreshDependencies = project.getGradle().getStartParameter().isRefreshDependencies() ||
-			project.hasProperty("minivan.refreshDependencies") ||
-			System.getProperty("minivan.refreshDependencies") != null;
+			project.hasProperty("shinkansen.refreshDependencies") ||
+			System.getProperty("shinkansen.refreshDependencies") != null;
 		
-		this.explainHashes = project.hasProperty("minivan.explainHashes") ||
-			System.getProperty("minivan.explainHashes") != null;
+		this.explainHashes = project.hasProperty("shinkansen.explainHashes") ||
+			System.getProperty("shinkansen.explainHashes") != null;
 		
 		this.accessWideners = project.getObjects().fileCollection();
 	}
@@ -35,13 +35,13 @@ public class MinivanExt {
 	public ConfigurableFileCollection accessWideners;
 	
 	@SuppressWarnings("unused")
-	public MinivanExt version(String v) {
+	public ShinkansenExt version(String v) {
 		version = v;
 		return this;
 	}
 	
 	@SuppressWarnings("unused")
-	public MinivanExt accessWideners(Object... aws) {
+	public ShinkansenExt accessWideners(Object... aws) {
 		accessWideners.from(aws);
 		return this;
 	}
@@ -115,7 +115,7 @@ public class MinivanExt {
 	/**
 	 * @apiNote This API isn't expandable and doesn't provide any way to select access wideners.
 	 *          It will still be supported, but minecraftBuilder() is more flexible.
-	 * @see MinivanExt#minecraftBuilder()
+	 * @see ShinkansenExt#minecraftBuilder()
 	 */
 	@SuppressWarnings("unused")
 	public MinecraftProvider.Result getMinecraft(String version) throws Exception {
@@ -125,7 +125,7 @@ public class MinivanExt {
 	/**
 	 * @apiNote This API isn't expandable and doesn't provide any way to select access wideners.
 	 *          It will still be supported, but minecraftBuilder() is more flexible.
-	 * @see MinivanExt#minecraftBuilder()
+	 * @see ShinkansenExt#minecraftBuilder()
 	 */
 	public MinecraftProvider.Result tryGetMinecraft(String version) {
 		return minecraftBuilder().version(version).build().tryGetMinecraft();

@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
 import net.fabricmc.accesswidener.AccessWidener;
 import net.fabricmc.accesswidener.AccessWidenerClassVisitor;

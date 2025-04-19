@@ -1,8 +1,8 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
-import agency.highlysuspect.minivan.MinivanPlugin;
-import agency.highlysuspect.minivan.stitch.ClassMergerCooler;
-import agency.highlysuspect.minivan.stitch.JarMergerCooler;
+import vg.skye.shinkansen.ShinkansenPlugin;
+import vg.skye.shinkansen.stitch.ClassMergerCooler;
+import vg.skye.shinkansen.stitch.JarMergerCooler;
 import org.gradle.api.Project;
 
 import java.io.BufferedOutputStream;
@@ -29,22 +29,22 @@ public class Merger extends MiniProvider {
 			log.lifecycle("Merging {} and {} to {}", client, server, merged);
 			
 			try(
-				FileSystem clientFs = MinivanPlugin.openFs(client);
-				FileSystem serverFs = MinivanPlugin.openFs(server);
-				FileSystem mergedFs = MinivanPlugin.createFs(merged);
-				InputStream bonus1 = Merger.class.getResourceAsStream("/agency/highlysuspect/minivan/side/Side.class");
-				InputStream bonus2 = Merger.class.getResourceAsStream("/agency/highlysuspect/minivan/side/SideOnly.class")
+					FileSystem clientFs = ShinkansenPlugin.openFs(client);
+					FileSystem serverFs = ShinkansenPlugin.openFs(server);
+					FileSystem mergedFs = ShinkansenPlugin.createFs(merged);
+					InputStream bonus1 = Merger.class.getResourceAsStream("/vg/skye/shinkansen/side/Side.class");
+					InputStream bonus2 = Merger.class.getResourceAsStream("/vg/skye/shinkansen/side/SideOnly.class")
 			) {
 				JarMergerCooler merger = new JarMergerCooler(clientFs, serverFs, mergedFs);
 				merger.merge(new ClassMergerCooler()
-					.sideEnum("Lagency/highlysuspect/minivan/side/Side;")
-					.sideDescriptorAnnotation("Lagency/highlysuspect/minivan/side/SideOnly;")
+					.sideEnum("Lvg/skye/shinkansen/side/Side;")
+					.sideDescriptorAnnotation("Lshinkansen/side/SideOnly;")
 				);
 				
 				//Free bonus classes:
-				Files.createDirectories(mergedFs.getPath("agency/highlysuspect/minivan/side"));
-				blah(bonus1, mergedFs.getPath("/agency/highlysuspect/minivan/side/Side.class"));
-				blah(bonus2, mergedFs.getPath("/agency/highlysuspect/minivan/side/SideOnly.class"));
+				Files.createDirectories(mergedFs.getPath("vg/skye/shinkansen/side"));
+				blah(bonus1, mergedFs.getPath("/vg/skye/shinkansen/side/Side.class"));
+				blah(bonus2, mergedFs.getPath("/vg/skye/shinkansen/side/SideOnly.class"));
 			}
 			
 			log.lifecycle("\\-> Done merging.");

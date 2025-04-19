@@ -1,6 +1,6 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
-import agency.highlysuspect.minivan.MinivanExt;
+import vg.skye.shinkansen.ShinkansenExt;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 
@@ -11,12 +11,12 @@ import java.nio.file.Path;
 public class MiniProvider {
 	public MiniProvider(Project project) {
 		this.project = project;
-		this.ext = project.getExtensions().getByType(MinivanExt.class);
+		this.ext = project.getExtensions().getByType(ShinkansenExt.class);
 		this.log = project.getLogger();
 	}
 	
 	protected final Project project;
-	protected final MinivanExt ext;
+	protected final ShinkansenExt ext;
 	protected final Logger log;
 	protected final Props props = new Props();
 	
@@ -43,8 +43,8 @@ public class MiniProvider {
 	
 	protected Path cacheDir() throws IOException {
 		Path cacheDir = props.has("projectmapped") ?
-			project.getRootProject().getProjectDir().toPath().resolve(".gradle").resolve("minivan-cache") : //project-local
-			project.getGradle().getGradleUserHomeDir().toPath().resolve("caches").resolve("minivan-cache"); //user-local
+			project.getRootProject().getProjectDir().toPath().resolve(".gradle").resolve("shinkansen-cache") : //project-local
+			project.getGradle().getGradleUserHomeDir().toPath().resolve("caches").resolve("shinkansen-cache"); //user-local
 		Files.createDirectories(cacheDir);
 		return cacheDir;
 	}

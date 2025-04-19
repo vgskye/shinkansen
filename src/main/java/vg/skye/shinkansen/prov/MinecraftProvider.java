@@ -1,7 +1,7 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
-import agency.highlysuspect.minivan.MinivanPlugin;
-import agency.highlysuspect.minivan.VersionManifest;
+import vg.skye.shinkansen.ShinkansenPlugin;
+import vg.skye.shinkansen.VersionManifest;
 import org.gradle.api.Project;
 
 import java.nio.file.Path;
@@ -44,7 +44,7 @@ public class MinecraftProvider extends MiniProvider {
 			
 			log.info("found vanilla dependency: {}", lib.getArtifactName());
 		}
-		String minecraftPrefix = "minecraft-" + MinivanPlugin.filenameSafe(version);
+		String minecraftPrefix = "minecraft-" + ShinkansenPlugin.filenameSafe(version);
 		
 		//Unbundle server
 		Unbundler serverUnbundler = new Unbundler(project, vanillaJars.server, minecraftPrefix + "-server-unbundled{HASH}.jar");

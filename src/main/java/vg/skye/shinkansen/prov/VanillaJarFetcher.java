@@ -1,9 +1,9 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
-import agency.highlysuspect.minivan.DownloadSession;
-import agency.highlysuspect.minivan.ManifestIndex;
-import agency.highlysuspect.minivan.MinivanPlugin;
-import agency.highlysuspect.minivan.VersionManifest;
+import vg.skye.shinkansen.DownloadSession;
+import vg.skye.shinkansen.ManifestIndex;
+import vg.skye.shinkansen.ShinkansenPlugin;
+import vg.skye.shinkansen.VersionManifest;
 import org.gradle.api.Project;
 
 import java.nio.file.Files;
@@ -14,7 +14,7 @@ public class VanillaJarFetcher extends MiniProvider {
 	public VanillaJarFetcher(Project project, String version) {
 		super(project);
 		this.version = version;
-		this.filenamePrefix = "minecraft-" + MinivanPlugin.filenameSafe(version);
+		this.filenamePrefix = "minecraft-" + ShinkansenPlugin.filenameSafe(version);
 		
 		props.set("version", version);
 	}

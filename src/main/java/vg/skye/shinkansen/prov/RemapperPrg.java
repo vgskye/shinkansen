@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan.prov;
+package vg.skye.shinkansen.prov;
 
 import net.fabricmc.tinyremapper.IMappingProvider;
 import net.fabricmc.tinyremapper.OutputConsumerPath;

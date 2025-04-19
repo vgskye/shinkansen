@@ -1,4 +1,4 @@
-package agency.highlysuspect.minivan;
+package vg.skye.shinkansen;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
